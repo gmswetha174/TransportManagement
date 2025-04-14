@@ -42,11 +42,17 @@ class DriverPanel:
             if not trips:
                 print("No trips assigned")
                 return
-                
+
             print("\n🛣️ Your Scheduled Trips:")
             for trip in trips:
-                status = "✅ Active" if trip.get_status() == "In Progress" else "🕒 Upcoming"
-                print(f"Trip {trip.get_trip_id()}: {trip.get_departure_date()} to {trip.get_arrival_date()} {status}")
+                status = trip.get_status()
+                if status == "In Progress":
+                    status_display = "✅ In Progress"
+                elif status == "Completed":
+                    status_display = "🏁 Completed"
+                else:
+                    status_display = "🕒 Upcoming"
+                print(f"Trip {trip.get_trip_id()}: {trip.get_departure_date()} to {trip.get_arrival_date()} [{status_display}]")
         except Exception as e:
             print(f"❌ Error: {e}")
 

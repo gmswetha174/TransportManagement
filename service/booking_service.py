@@ -14,8 +14,7 @@ class BookingService:
             raise InvalidBookingDataException("Invalid booking status. Allowed values: Confirmed, Cancelled, Completed.")
 
         # Book the ticket
-        self.booking_dao.book_ticket(booking)
-        return True
+        return self.booking_dao.book_ticket(booking)
 
     def get_all_bookings(self):
         return self.booking_dao.get_all_bookings()
@@ -51,5 +50,3 @@ class BookingService:
     def get_past_bookings_by_passenger_id(self, passenger_id: int):
         return self.booking_dao.get_past_bookings_by_passenger_id(passenger_id)
     
-    def book_ticket(self, booking: Booking):
-        return self.booking_dao.add_booking(booking)

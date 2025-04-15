@@ -1,14 +1,13 @@
 class Passenger:
 
-    def __init__(self, passenger_id=None, first_name=None, age=None, phone_number=None,gender=None, email=None):
+    def __init__(self, passenger_id=None, first_name=None, age=None, phone_number=None, gender=None, email=None, password=None):
         self.__passenger_id = passenger_id
         self.__first_name = first_name
         self.__age = age
         self.__phone_number = phone_number
         self.__gender = gender
         self.__email = email
-
-    # Other methods remain unchanged
+        self.__password = password
 
     def get_passenger_id(self):
         return self.__passenger_id
@@ -51,8 +50,13 @@ class Passenger:
         if not phone_number.isdigit() or len(phone_number) < 10 or len(phone_number) > 15:
             raise ValueError("Phone number must be numeric and between 10 and 15 digits.")
         self.__phone_number = phone_number
-    
+
+    def get_password(self):
+        return self.__password
+
+    def set_password(self, password):
+        self.__password = password
+
     def __str__(self):
         return (f"PassengerID: {self.__passenger_id}, Name: {self.__first_name}, Gender: {self.__gender}, "
-            f"Age: {self.__age}, Email: {self.__email}, Phone: {self.__phone_number}")
-     
+                f"Age: {self.__age}, Email: {self.__email}, Phone: {self.__phone_number}")

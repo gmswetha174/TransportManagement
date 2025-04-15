@@ -7,18 +7,18 @@ class PassengerDAO:
         self.cursor = self.conn.cursor()
 
     def add_passenger(self, passenger: Passenger):
-        query = "INSERT INTO Passengers (FirstName, Gender, Age, Email, PhoneNumber) VALUES (%s, %s, %s, %s, %s)"
+        query = "INSERT INTO Passengers (FirstName, Gender, Age, Email, PhoneNumber, Password) VALUES (%s, %s, %s, %s, %s, %s)"
         values = (
             passenger.get_first_name(),
             passenger.get_gender(),
             passenger.get_age(),
             passenger.get_email(),
-            passenger.get_phone_number()
+            passenger.get_phone_number(),
+            passenger.get_password()
         )
-        # Debugging: Print the query and values
-        print(f"Debug: Query={query}, Values={values}")
         self.cursor.execute(query, values)
         self.conn.commit()
+
     def get_all_passengers(self):
         query = "SELECT PassengerID, FirstName, Age, PhoneNumber, Gender, Email FROM Passengers"
         self.cursor.execute(query)
@@ -36,27 +36,28 @@ class PassengerDAO:
             )
             passengers.append(passenger)
         return passengers
+
     def get_passenger_by_id(self, passenger_id: int):
-        query = "SELECT PassengerID, FirstName, Gender, Age, Email, PhoneNumber FROM Passengers WHERE PassengerID = %s"
+        query = "SELECT PassengerID, FirstName, Gender, Age, Email, PhoneNumber, Password FROM Passengers WHERE PassengerID = %s"
         self.cursor.execute(query, (passenger_id,))
         row = self.cursor.fetchone()
         if row:
-            # Map the row to a Passenger object
             passenger = Passenger(
-                passenger_id=row[0],  # PassengerID
-                first_name=row[1],   # FirstName
-                age=row[3],          # Age
-                phone_number=row[5]  # PhoneNumber
+                passenger_id=row[0],
+                first_name=row[1],
+                gender=row[2],
+                age=row[3],
+                email=row[4],
+                phone_number=row[5],
+                password=row[6]
             )
-            passenger.set_gender(row[2])  # Gender
-            passenger.set_email(row[4])  # Email
             return passenger
         return None
 
     def update_passenger(self, passenger: Passenger):
         query = """
             UPDATE Passengers
-            SET FirstName = %s, Gender = %s, Age = %s, Email = %s, PhoneNumber = %s
+            SET FirstName = %s, Gender = %s, Age = %s, Email = %s, PhoneNumber = %s, Password = %s
             WHERE PassengerID = %s
         """
         values = (
@@ -65,6 +66,7 @@ class PassengerDAO:
             passenger.get_age(),
             passenger.get_email(),
             passenger.get_phone_number(),
+            passenger.get_password(),
             passenger.get_passenger_id()
         )
         self.cursor.execute(query, values)
@@ -74,3 +76,24 @@ class PassengerDAO:
         query = "DELETE FROM Passengers WHERE PassengerID = %s"
         self.cursor.execute(query, (passenger_id,))
         self.conn.commit()
+
+    def login_passenger_by_id(self, passenger_id: int, password: str):
+        query = """
+            SELECT PassengerID, FirstName, Gender, Age, Email, PhoneNumber, Password 
+            FROM Passengers 
+            WHERE PassengerID = %s AND Password = %s
+        """
+        self.cursor.execute(query, (passenger_id, password))
+        row = self.cursor.fetchone()
+        if row:
+            return Passenger(
+                passenger_id=row[0],
+                first_name=row[1],
+                gender=row[2],
+                age=row[3],
+                email=row[4],
+                phone_number=row[5],
+                password=row[6]
+            )
+        return None
+

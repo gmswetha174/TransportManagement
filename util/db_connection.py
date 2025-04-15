@@ -12,7 +12,7 @@ class DBConnUtil:
 
         try:
             # Load properties from db.properties
-            props = DBPropertyUtil.get_connection_string("d:\\Transport_Management\\util\\db.properties")
+            props = DBPropertyUtil.get_connection_string("d:\\TransportManagement\\util\\db.properties")
 
             # Create connection using loaded properties
             DBConnUtil._connection = mysql.connector.connect(

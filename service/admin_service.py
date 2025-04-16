@@ -533,3 +533,16 @@ class AdminService:
             print(f"✅ Driver deallocated from Trip {trip_id} successfully!")
         except Exception as e:
             print(f"❌ Error deallocating driver: {e}")
+            
+    def view_driver_issues(self):
+        try:
+            driver_id = int(input("Enter driver ID to view issues: "))
+            issues = self.driver_service.view_driver_issues(driver_id)
+            if issues:
+                print(f"\nIssues reported by Driver ID {driver_id}:")
+                for issue in issues:
+                    print(f"Issue ID: {issue[0]} | Trip ID: {issue[1]} | Description: {issue[2]}")
+            else:
+                print("✅ No issues reported by this driver.")
+        except Exception as e:
+            print(f"❌ Error: {e}")

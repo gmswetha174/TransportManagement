@@ -134,3 +134,8 @@ class DriverDAO:
         except mysql.connector.Error as e:
             print(f"Database error: {e}")
             raise
+        
+    def get_driver_issues(self, driver_id: int):
+        query = "SELECT IssueID, TripID, Description FROM DriverIssues WHERE DriverID = %s"
+        self.cursor.execute(query, (driver_id,))
+        return self.cursor.fetchall()

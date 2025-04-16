@@ -148,7 +148,8 @@ class Admin :
             print("4. View All Drivers")
             print("5. Allocate Driver to Trip")
             print("6. Deallocate Driver")
-            print("7. Back to Admin Menu")
+            print("7. View Driver Issues")
+            print("8. Back to Admin Menu")
             choice = input("Enter choice: ")
 
             if choice == "1":
@@ -164,6 +165,8 @@ class Admin :
             elif choice == "6":
                 admin_service.deallocate_driver()
             elif choice == "7":
+                admin_service.view_driver_issues()
+            elif choice == "8":
                 break
             else:
                 print("❌ Invalid choice. Try again.")

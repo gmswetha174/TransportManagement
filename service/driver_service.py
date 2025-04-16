@@ -75,3 +75,8 @@ class DriverService:
     
     def delete_driver(self, driver_id: int):
         self.driver_dao.delete_driver(driver_id)
+        
+    def view_driver_issues(self, driver_id: int) -> list:
+        """Return list of issues reported by a driver"""
+        self.get_driver_by_id(driver_id)  # Ensure driver exists
+        return self.driver_dao.get_driver_issues(driver_id)

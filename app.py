@@ -185,8 +185,8 @@ def driver_menu():
         if not driver:
             print("❌ Invalid credentials.")
             return
-        print(f"\n👋 Welcome, {driver.get_first_name()}!")
-        DriverPanel(driver).show_panel()
+        print(f"\n👋 Welcome, {driver.get_name()}!")
+        DriverPanel(driver).show_menu()
     except Exception as e:
         print(f"❌ Error in driver menu: {e}")
 

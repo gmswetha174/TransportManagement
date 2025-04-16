@@ -20,6 +20,12 @@ class DriverService:
             raise DriverNotFoundException(f"Driver with ID {driver_id} not found")
         return driver
 
+    def login_driver(self, driver_id: int, password: str) -> Driver:
+        driver = self.get_driver_by_id(driver_id)
+        if driver and driver.get_password() == password:
+            return driver
+        raise DriverNotFoundException("Invalid driver ID or password")
+    
     # Driver-Specific Functionalities
     def get_driver_trips(self, driver_id: int) -> list:
         """Get all trips assigned to a specific driver"""

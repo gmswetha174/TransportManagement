@@ -1,17 +1,16 @@
-# panels/driver_panel.py
 from service.driver_service import DriverService
 from service.trip_service import TripService
-from exceptions.exceptions import TripNotFoundException, InvalidDriverDataException
 
 class DriverPanel:
-    def __init__(self, driver_id):
-        self.driver_id = driver_id
+    def __init__(self, driver):
+        self.driver = driver
+        self.driver_id = driver.get_driver_id()
         self.driver_service = DriverService()
         self.trip_service = TripService()
 
     def show_menu(self):
         while True:
-            print(f"\n===== Driver Panel (ID: {self.driver_id}) =====")
+            print(f"\n===== Driver Panel (ID: {self.driver_id} - {self.driver.get_name()}) =====")
             print("1. View My Scheduled Trips")
             print("2. Start Trip")
             print("3. Complete Trip")

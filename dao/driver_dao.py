@@ -1,3 +1,4 @@
+import mysql.connector
 from util.db_connection import DBConnUtil
 from entity.driver import Driver
 
@@ -8,17 +9,16 @@ class DriverDAO:
 
     def add_driver(self, driver: Driver):
         query = """
-            INSERT INTO Drivers (Name, LicenseNumber, PhoneNumber, Status)
-            VALUES (%s, %s, %s, %s)
+            INSERT INTO Drivers (Name, LicenseNumber, PhoneNumber, Status, Password)
+            VALUES (%s, %s, %s, %s, %s)
         """
         values = (
             driver.get_name(),
             driver.get_license_number(),
             driver.get_phone_number(),
-            driver.get_status()
+            driver.get_status(),
+            driver.get_password()
         )
-        self.cursor.execute(query, values)
-        self.conn.commit()
 
     def get_all_drivers(self):
         query = "SELECT * FROM Drivers"
@@ -33,7 +33,7 @@ class DriverDAO:
         self.cursor.execute(query, (driver_id,))
         row = self.cursor.fetchone()
         if row:
-            return Driver(row[0], row[1], row[2], row[3], row[4])
+            return Driver(row[0], row[1], row[2], row[3], row[4],row[5])
         return None
 
     def update_driver(self, driver: Driver) -> bool:
@@ -111,3 +111,26 @@ class DriverDAO:
         query = "UPDATE Trips SET DriverID = NULL WHERE TripID = %s"
         self.cursor.execute(query, (trip_id,))
         self.conn.commit()
+        
+    def validate_driver_login(self, driver_id: int, password: str) -> Driver:
+        """Validate driver login credentials against the database."""
+        try:
+            query = "SELECT * FROM drivers WHERE DriverID = %s AND password = %s"
+            self.cursor.execute(query, (driver_id, password))
+            result = self.cursor.fetchone()
+
+            if result:
+                # Assuming result contains columns: driver_id, name, license_number, status, etc.
+                driver = Driver(
+                    driver_id=result[0], 
+                    name=result[1], 
+                    license_number=result[2], 
+                    status=result[3]  # Assuming status is in the result
+                )
+                return driver
+            else:
+                raise DriverNotFoundException("Invalid driver credentials")
+
+        except mysql.connector.Error as e:
+            print(f"Database error: {e}")
+            raise

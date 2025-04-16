@@ -156,3 +156,41 @@ CREATE TABLE DriverIssues (
     FOREIGN KEY (DriverID) REFERENCES Drivers(DriverID),
     FOREIGN KEY (TripID) REFERENCES Trips(TripID)
 );
+-- added for password validation
+ALTER TABLE Passengers ADD password VARCHAR(100) NOT NULL;
+ALTER TABLE Drivers ADD password VARCHAR(100) NOT NULL;
+
+DESC Passengers;
+DESC Drivers;
+
+UPDATE Drivers SET password = 'john123' WHERE Name = 'John Smith';
+UPDATE Drivers SET password = 'jane123' WHERE Name = 'Jane Doe';
+UPDATE Drivers SET password = 'michael123' WHERE Name = 'Michael Johnson';
+UPDATE Drivers SET password = 'emily123' WHERE Name = 'Emily Brown';
+UPDATE Drivers SET password = 'sophia123' WHERE Name = 'Sophia Davis';
+UPDATE Drivers SET password = 'david123' WHERE Name = 'David Wilson';
+UPDATE Drivers SET password = 'olivia123' WHERE Name = 'Olivia Taylor';
+UPDATE Drivers SET password = 'william123' WHERE Name = 'William Anderson';
+UPDATE Drivers SET password = 'emma123' WHERE Name = 'Emma Thomas';
+UPDATE Drivers SET password = 'james123' WHERE Name = 'James Martinez';
+
+SELECT *from drivers;
+
+UPDATE passengers SET password = 'john123' WHERE FirstName = 'John Doe';
+UPDATE passengers SET password = 'jane123' WHERE FirstName = 'Jane Smith';
+UPDATE passengers SET password = 'alex123' WHERE FirstName = 'Alex Johnson';
+UPDATE passengers SET password = 'michael123' WHERE FirstName = 'Michael Brown';
+UPDATE passengers SET password = 'emily123' WHERE FirstName = 'Emily Davis';
+UPDATE passengers SET password = 'sophia123' WHERE FirstName = 'Sophia Wilson';
+UPDATE passengers SET password = 'david123' WHERE FirstName = 'David Martinez';
+UPDATE passengers SET password = 'olivia123' WHERE FirstName = 'Olivia Taylor';
+UPDATE passengers SET password = 'william123' WHERE FirstName = 'William Anderson';
+UPDATE passengers SET password = 'emma123' WHERE FirstName = 'Emma Thomas';
+UPDATE passengers SET password = 'swetha123' WHERE FirstName = 'Swetha G M';
+UPDATE passengers SET password = 'naren123' WHERE FirstName = 'naren dhuta';
+UPDATE passengers SET password = 'nithya123' WHERE FirstName = 'nithya';
+UPDATE passengers SET password = 'karthik123' WHERE FirstName = 'karthik';
+UPDATE passengers SET password = 'fathima123' WHERE FirstName = 'fathima';
+
+SELECT *from passengers;
+

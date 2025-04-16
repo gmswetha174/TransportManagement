@@ -1,10 +1,11 @@
 class Driver:
-    def __init__(self, driver_id=None, name=None, license_number=None, phone_number=None, status=None):
+    def __init__(self, driver_id=None, name=None, license_number=None, phone_number=None, status=None, password=None):
         self.__driver_id = driver_id
         self.__name = name
         self.__license_number = license_number
         self.__phone_number = phone_number
         self.__status = status
+        self.__password = password
 
     def get_driver_id(self):
         return self.__driver_id
@@ -35,3 +36,12 @@ class Driver:
 
     def set_status(self, status):
         self.__status = status
+
+    def get_password(self):
+        return self.__password
+
+    def set_password(self, password):
+        self.__password = password
+
+    def __str__(self):
+        return f"{self.get_driver_id()} - {self.get_name()}"

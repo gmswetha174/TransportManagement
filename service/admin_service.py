@@ -25,8 +25,25 @@ class AdminService:
         self.driver_service = DriverService() 
 
 # ========================= Manage Trips =========================
+    
     def add_trip(self):
         try:
+            print("\n🚗 Available Vehicles:")
+            vehicles = self.vehicle_service.get_all_vehicles()
+            if vehicles:
+                for v in vehicles:
+                    print(f"ID: {v.get_vehicle_id()} | Type: {v.get_vehicle_type()} | Model: {v.get_model()} | Capacity: {v.get_capacity()} | Status: {v.get_status()}")
+            else:
+                print("⚠️ No vehicles found.")
+
+            print("\n🛣️ Available Routes:")
+            routes = self.route_service.get_all_routes()
+            if routes:
+                for r in routes:
+                    print(f"ID: {r.get_route_id()} | From: {r.get_start_destination()} → To: {r.get_end_destination()} | Distance: {r.get_distance()} km")
+            else:
+                print("⚠️ No routes found.")
+
             print("\n🚌 Add a New Trip:")
             vehicle_id = int(input("Enter Vehicle ID: "))
             route_id = int(input("Enter Route ID: "))
@@ -39,9 +56,11 @@ class AdminService:
             trip = Trip(None, vehicle_id, route_id, departure_date, arrival_date, status, trip_type, max_passengers)
             self.trip_service.add_trip(trip)
             print("✅ Trip added successfully!")
+
         except Exception as e:
             print(f"❌ Error adding trip: {e}")
-            
+
+
     def update_trip(self):
         try:
             print("\n✏️ Update Trip Details:")
@@ -279,6 +298,7 @@ class AdminService:
             print(f"❌ Error fetching vehicles: {e}")
             
         # ======================== Manage Routes ========================
+    
     def add_route(self):
         try:
             print("\n🛣️ Add a New Route:")

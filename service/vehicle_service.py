@@ -24,6 +24,18 @@ class VehicleService:
     def get_all_vehicles(self):
         return self.vehicle_dao.get_all_vehicles()
 
+    def get_all_available_vehicles(self):
+        try:
+            cursor = self.conn.cursor()
+            cursor.execute("""
+                SELECT vehicle_id, vehicle_type, model, registration_number 
+                FROM vehicles 
+                WHERE status = 'available'
+            """)
+            return cursor.fetchall()
+        except Exception as e:
+            raise e
+    
     def get_vehicle_by_id(self, vehicle_id: int) -> Vehicle:
         vehicle = self.vehicle_dao.get_vehicle_by_id(vehicle_id)
         if not vehicle:
